@@ -125,6 +125,41 @@
       color: #fff;
     }
 
+    .order-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .order-btn {
+      padding: 2px 7px;
+      background: transparent;
+      color: #888;
+      border: 1.5px solid #ccc;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      line-height: 1.2;
+    }
+
+    .order-btn:hover {
+      background: #6c63ff;
+      color: #fff;
+      border-color: #6c63ff;
+    }
+
+    .order-btn:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    .order-btn:disabled:hover {
+      background: transparent;
+      color: #888;
+      border-color: #ccc;
+    }
+
     .counter {
       font-size: 0.85rem;
       color: #888;
@@ -179,6 +214,13 @@
       render();
     }
 
+    function moveTask(index, direction) {
+      const target = index + direction;
+      if (target < 0 || target >= tasks.length) return;
+      [tasks[index], tasks[target]] = [tasks[target], tasks[index]];
+      render();
+    }
+
     function render() {
       const counter = document.getElementById('counter');
       const done = tasks.filter(t => t.done).length;
@@ -200,11 +242,30 @@
         span.textContent = task.text;
         span.onclick = () => toggleTask(i);
 
+        const orderBtns = document.createElement('div');
+        orderBtns.className = 'order-btns';
+
+        const upBtn = document.createElement('button');
+        upBtn.className = 'order-btn';
+        upBtn.textContent = '▲';
+        upBtn.disabled = i === 0;
+        upBtn.onclick = () => moveTask(i, -1);
+
+        const downBtn = document.createElement('button');
+        downBtn.className = 'order-btn';
+        downBtn.textContent = '▼';
+        downBtn.disabled = i === tasks.length - 1;
+        downBtn.onclick = () => moveTask(i, 1);
+
+        orderBtns.appendChild(upBtn);
+        orderBtns.appendChild(downBtn);
+
         const btn = document.createElement('button');
         btn.className = 'delete-btn';
         btn.textContent = '削除';
         btn.onclick = () => deleteTask(i);
 
+        li.appendChild(orderBtns);
         li.appendChild(span);
         li.appendChild(btn);
         list.appendChild(li);
