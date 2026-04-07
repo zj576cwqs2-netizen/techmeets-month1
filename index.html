@@ -182,7 +182,7 @@
     function render() {
       const counter = document.getElementById('counter');
       const done = tasks.filter(t => t.done).length;
-      counter.textContent = tasks.length > 0 ? `完了 ${done} / ${tasks.length} 件` : '';
+      counter.textContent = tasks.length > 0 ? `${done} / ${tasks.length}　件完了` : '';
 
       list.innerHTML = '';
 
