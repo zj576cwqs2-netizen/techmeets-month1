@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スライドショー</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slideshow {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 32px;
+      width: 100%;
+      max-width: 680px;
+    }
+
+    .slide-image {
+      width: 100%;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .nav-btn {
+      padding: 10px 24px;
+      background: #6c63ff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: #574fd6;
+    }
+
+    .nav-btn:disabled {
+      background: #ccc;
+      cursor: default;
+    }
+
+    .counter {
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="slideshow">
+    <img id="slide-image" class="slide-image" src="" alt="スライド画像">
+    <div class="controls">
+      <button class="nav-btn" id="prev-btn" onclick="move(-1)">← 前へ</button>
+      <span class="counter" id="counter"></span>
+      <button class="nav-btn" id="next-btn" onclick="move(1)">次へ →</button>
+    </div>
+  </div>
+
+  <script>
+    const images = [
+      'https://placehold.jp/600x300.png',
+      'https://placehold.jp/600x300.png',
+      'https://placehold.jp/600x300.png',
+      'https://placehold.jp/600x300.png',
+      'https://placehold.jp/600x300.png',
+    ];
+
+    let current = 0;
+
+    function render() {
+      document.getElementById('slide-image').src = images[current];
+      document.getElementById('counter').textContent = `${current + 1} / ${images.length}`;
+      document.getElementById('prev-btn').disabled = current === 0;
+      document.getElementById('next-btn').disabled = current === images.length - 1;
+    }
+
+    function move(dir) {
+      const next = current + dir;
+      if (next < 0 || next >= images.length) return;
+      current = next;
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>
