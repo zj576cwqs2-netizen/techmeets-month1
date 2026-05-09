@@ -1,52 +1,68 @@
 <?php
-require_once 'db.php';
-$conn = getDBConnection();
-
-// 全ユーザーを取得（作成日時の新しい順）
-$query = "SELECT id, username, email, age, created_at FROM users ORDER BY created_at DESC";
-$result = $conn->query($query);
+$_GET[''];
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->bind_param("i", );
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+echo $user['id'] . ': ' . htmlspecialchars($user['username']);
 ?>
+require_once 'db.php';
 
+$error = '';
+
+// フォームが送信されたとき（POSTリクエスト）
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = trim($_POST['username'] ?? '');
+    $email    = trim($_POST['email'] ?? '');
+    $age      = $_POST['age'] ?? '';
+
+    if ($username === '' || $email === ''||$age === ''){
+        $error = 'ユーザー名とメールアドレスと年齢は必須です。';
+    } else {
+        $conn = getDBConnection();
+        $stmt = $conn->prepare("INSERT INTO users (username, email, age) VALUES (?, ?, ?)");
+        $stmt->bind_param("ssi", $username, $email, $age);
+
+        if ($stmt->execute()) {
+            $stmt->close();
+            $conn->close();
+            // 登録成功したら一覧ページに移動する
+            header('Location: index.php');
+            exit;
+        } else {
+            $error = '登録に失敗しました: ' . $stmt->error;
+            $stmt->close();
+            $conn->close();
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>ユーザー管理システム</title>
+    <title>ユーザー登録</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>ユーザー一覧</h1>
-    <a href="create.php">新規ユーザー登録</a>
-    
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>ユーザー名</th>
-                <th>メール</th>
-                <th>年齢</th>
-                <th>登録日</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php while ($row = $result->fetch_assoc()): ?>
-            <tr>
-                <td><?php echo $row['id']; ?></td>
-                <td><?php echo htmlspecialchars($row['username']); ?></td>
-                <td><?php echo htmlspecialchars($row['email']); ?></td>
-                <td><?php echo $row['age']; ?></td>
-                <td><?php echo $row['created_at']; ?></td>
-                <td>
-                    <a href="edit.php?id=<?php echo $row['id']; ?>">編集</a>
-                    <a href="delete.php?id=<?php echo $row['id']; ?>" onclick="return confirm('本当に削除しますか？')">削除</a>
-                </td>
-            </tr>
-            <?php endwhile; ?>
-        </tbody>
-    </table>
+    <h1>新規ユーザー登録</h1>
+    <a href="index.php">← 一覧に戻る</a>
+
+    <?php if ($error): ?>
+    <p style="color: red;"><?php echo htmlspecialchars($error); ?></p>
+    <?php endif; ?>
+
+    <form method="POST">
+        <label>ユーザー名:
+            <input type="text" name="username" value="<?php echo htmlspecialchars($_POST['username'] ?? ''); ?>">
+        </label><br>
+        <label>メール:
+            <input type="email" name="email" value="<?php echo htmlspecialchars($_POST['email'] ?? ''); ?>">
+        </label><br>
+        <label>年齢:
+            <input type="number" name="age" value="<?php echo htmlspecialchars($_POST['age'] ?? ''); ?>">
+        </label><br>
+        <button type="submit">登録する</button>
+    </form>
 </body>
 </html>
-
-<?php
-$conn->close();
-?>

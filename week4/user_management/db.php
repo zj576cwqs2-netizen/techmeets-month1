@@ -1,6 +1,6 @@
 <?php
 // データベース接続情報
-define('DB_HOST', 'db');
+define('DB_HOST', '127.0.0.1');
 define('DB_NAME', 'myapp_db');
 define('DB_USER', 'root');
 define('DB_PASS', 'root');

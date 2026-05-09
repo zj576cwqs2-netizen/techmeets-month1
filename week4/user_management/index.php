@@ -1,12 +1,13 @@
 <?php
+$id = $_GET['id'];
 require_once 'db.php';
 $conn = getDBConnection();
-
 // 全ユーザーを取得
-$query = "SELECT id, username, email, age, created_at FROM users ORDER BY created_at DESC";
-$result = $conn->query($query);
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmt ->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
