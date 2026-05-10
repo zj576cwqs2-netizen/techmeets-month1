@@ -1,6 +1,6 @@
 <?php
-$id = $_GET['id'];
 require_once 'db.php';
+$id = $_GET['id'];
 $conn = getDBConnection();
 // 全ユーザーを取得
 $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");

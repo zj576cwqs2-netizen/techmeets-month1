@@ -1,0 +1,120 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+ 
+body {
+    font-family: sans-serif;
+    font-size: 16px;
+    color: #333;
+    background: #f5f5f5;
+    padding: 2rem;
+}
+ 
+h1 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+ 
+a {
+    color: #0070f3;
+    text-decoration: none;
+}
+ 
+a:hover {
+    text-decoration: underline;
+}
+ 
+/* テーブル（index.php用） */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    margin-top: 1rem;
+}
+ 
+th, td {
+    padding: 0.75rem 1rem;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+ 
+th {
+    background: #f0f0f0;
+    font-weight: 500;
+}
+ 
+/* フォーム */
+form {
+    background: #fff;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    max-width: 480px;
+    margin-top: 1rem;
+}
+ 
+label {
+    display: block;
+    margin-bottom: 1rem;
+    font-size: 14px;
+    color: #555;
+}
+ 
+input[type="text"],
+input[type="email"],
+input[type="number"] {
+    display: block;
+    width: 100%;
+    margin-top: 4px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+}
+ 
+input:focus {
+    outline: none;
+    border-color: #0070f3;
+    box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+ 
+button[type="submit"] {
+    padding: 0.5rem 1.25rem;
+    background: #0070f3;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 15px;
+    cursor: pointer;
+}
+ 
+button[type="submit"]:hover {
+    background: #005bb5;
+}
+ 
+/* エラーメッセージ */
+p[style*="color: red"] {
+    background: #fff0f0;
+    border: 1px solid #f5c2c2;
+    border-radius: 4px;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+    font-size: 14px;
+}
+ 
+/* 削除ボタン */
+.btn-delete {
+    padding: 4px 10px;
+    background: #fff;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+}
+ 
+.btn-delete:hover {
+    background: #fff0f0;
+}

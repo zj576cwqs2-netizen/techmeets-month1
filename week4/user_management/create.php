@@ -1,15 +1,15 @@
 <?php
-$_GET[''];
+require_once 'db.php'; // 
+$error = ''; 
+
+$id = $_GET['id'];
+$conn = getDBConnection();
 $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
-$stmt->bind_param("i", );
+$stmt->bind_param("i",$id);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
 echo $user['id'] . ': ' . htmlspecialchars($user['username']);
-?>
-require_once 'db.php';
-
-$error = '';
 
 // フォームが送信されたとき（POSTリクエスト）
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

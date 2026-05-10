@@ -1,5 +1,14 @@
 <?php
 require_once 'db.php';
+$id = $_GET['id']??'';
+$conn = getDBConnection();
+$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmt->bind_param("id", $id);
+
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
 
 $id    = $_GET['id'] ?? '';
 $error = '';
@@ -25,7 +34,7 @@ if (!$user) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = trim($_POST['username'] ?? '');
     $email    = trim($_POST['email'] ?? '');
-    $age      = $_POST['age'] ?? '';
+    $age      = $_POST['age'] ?? '0';
 
     if ($username === '' || $email === '') {
         $error = 'ユーザー名とメールアドレスは必須です。';
