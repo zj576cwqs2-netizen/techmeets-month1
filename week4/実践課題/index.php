@@ -12,21 +12,23 @@ $conn->close();
 <!DOCTYPE html>
 <html>
 <head>
-    <title>投稿一覧</title>
+    <title>記事一覧</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>投稿一覧</h1>
-    <a href="create.php">新規投稿</a>
+    <h1>記事一覧</h1>
+    <a href="create.php">＋新規投稿</a>
     
+    <?php if (empty($posts)): ?>
+    <p>記事がありません</p>
+    <?php else: ?>
     <table>
         <thead>
-            <tr>
+            　　<tr>タイトル<th>              
                 <th>ID</th>
-                <th>タイトル</th>
-                <th>本文</th>
-                <th>作成日時</th>
-                <th>操作</th>
+                <th>投稿者</th>
+                <th>投稿日時</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -44,5 +46,6 @@ $conn->close();
             <?php endforeach; ?>
         </tbody>
     </table>
+    <?php endif; ?>
 </body>
 </html>
